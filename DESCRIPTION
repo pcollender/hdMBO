@@ -1,0 +1,37 @@
+Package: hdMBO
+Title: Single and Multi-Objective High-Dimensional Model-Based Optimization (hdMBO)
+Version: 0.0.0.9000
+Authors@R:
+    person(given = "Aidan",
+           family = "McLoughlin",
+           role = c("aut", "cre"),
+           email = "aidan_mcloughlin@berkeley.edu",
+           comment = c(ORCID = "0000-0001-5876-1636"))
+Description: This package provides a pipeline to generally
+    optimize single and multi-objective problems on continuous design spaces.
+    The package is built to run standard kriging MBO for problems as well as
+    utilizing dropout methods when the design space has high dimension.
+    Alternative methods for high dimensional optimization are under development.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+    adagio,
+    emoa,
+    mco,
+    lhs,
+    DiceKriging,
+    GPareto,
+    data.table,
+    ggplot2,
+    parallel,
+    foreach,
+    iterators,
+    snow,
+    doSNOW
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
