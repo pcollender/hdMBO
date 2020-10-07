@@ -1,3 +1,4 @@
+#' @export
 parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
                          maxSeed = 1e9) {
   # This function simultaneously handles:

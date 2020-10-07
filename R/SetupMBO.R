@@ -35,8 +35,8 @@ SetupMBO <- function(d.pars, bb.fn, target.fns, hyper.pars) {
     new.objf = parallelEval(bb.fn, designs = init.des,
                             nSampleAvg = hyper.pars$nSampleAvg,
                             nCores = hyper.pars$nCores)
-  } else{new.objf = t(as.matrix(apply(init.des, 1, bb.fn.mbo),
-                                nrow = ncol(results.mbo$outcomes$obj.evals)))}
+  } else{new.objf = as.matrix(apply(init.des, 1, bb.fn.mbo),
+                                nrow = ncol(results.mbo$outcomes$obj.evals))}
 
   ## initialize outcomes object
   outcomes.mbo = list(
