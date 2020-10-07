@@ -122,7 +122,7 @@ mbo.hyperparams =
   SetDefaultMBOHyperPars()
 
 ## Here is an example of updating hyperparams as necessary:
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "first_ex"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE #include the time in the saved file names?
 ## RunMBO general usage:
@@ -192,7 +192,7 @@ set.seed(2020)
 mbo.hyperparams = s
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "reprod_first_ex"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE #include the time in the saved file names?
 
@@ -449,7 +449,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "low_dim_sin_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations = 6
@@ -473,7 +473,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "reprod_low_dim_sin_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations = 6
@@ -503,7 +503,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "low_dim_bi_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 
@@ -540,7 +540,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "reprod_low_dim_bi_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 
@@ -598,7 +598,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "high_dim_sin_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations                         = 5 
@@ -624,7 +624,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "reprod_high_dim_sin_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations                         = 5
@@ -655,7 +655,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "high_dim_bi_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations = 7
@@ -684,7 +684,7 @@ set.seed(2020)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "reprod_high_dim_bi_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations = 7
@@ -728,7 +728,7 @@ Then, simply include the old results.mbo object as an argument in RunMBO()
 ```{r warm-starting, warning=FALSE, cache=TRUE}
 rm(results.mbo, mbo.test)
 ## load a previously completed run:
-load("demo_results/low_dim_sin_obj_FINAL.RData")
+load("demo_results//low_dim_sin_obj_FINAL.RData")
 mbo.old = results.mbo
 
 ## set hypers
@@ -736,7 +736,7 @@ set.seed(4040)
 mbo.hyperparams = 
   SetDefaultMBOHyperPars()
 
-mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results"
+mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "warm_start"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 mbo.hyperparams$iterations = 3
