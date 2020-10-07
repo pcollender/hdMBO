@@ -11,11 +11,17 @@ SetupMBO <- function(d.pars, bb.fn, target.fns, hyper.pars) {
     return(bb.fn(x, parent.frame$target.fns))
   }
 
-  # assign bounds to search space
-  design.pars.mbo =
-    lapply(d.pars, function(x) x=c(-1*hyper.pars$designParamBound,
-                                   hyper.pars$designParamBound))
-  names(design.pars.mbo) = names(d.pars)
+  # check if parameter box boundaries are manually initiated
+  if(length(setdiff(unique(sapply(d.pars, length)), 2)) != 0) {
+    # assign bounds to search space
+    design.pars.mbo =
+      lapply(d.pars, function(x) x=c(-1*hyper.pars$designParamBound,
+                                     hyper.pars$designParamBound))
+    names(design.pars.mbo) = names(d.pars)
+  } else{
+    design.pars.mbo = d.pars
+  }
+
 
 
   ## Generate Initial Designs
