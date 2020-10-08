@@ -22,7 +22,7 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
 
   if(nSampleAvg == 1) {
     new.objf = foreach::foreach(i = seq_len(nrow(designs)),
-                                .packages = c("stats"),
+                                .packages = (.packages()),
                                 .combine = rbind,
                                 .export   = ls(.GlobalEnv)) %dopar% {
                                   set.seed(parallel_seeds[i])
@@ -31,7 +31,7 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
   } else{
     new.objf =
       foreach::foreach(i = seq_len(nrow(designs)),
-                       .packages = c("stats"),
+                       .packages = (.packages()),
                        .combine  = rbind,
                        .export   = ls(.GlobalEnv)) %:%
       foreach::foreach(j = seq_len(nSampleAvg),
