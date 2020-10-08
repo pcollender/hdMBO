@@ -10,9 +10,6 @@ vignette: >
 
 
 ```{r setup}
-### TODO: remove this when making the package public
-devtools::install_github("aidantmcloughlin/hdMBO",
-                         auth_token = "f6163dbe7a0370ef62214d069f273cbba0becc00")
 library(hdMBO)
 ```
 

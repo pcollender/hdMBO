@@ -24,7 +24,7 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
     new.objf = foreach::foreach(i = seq_len(nrow(designs)),
                                 .packages = c("stats"),
                                 .combine = rbind,
-                                .export   = .GlobalEnv) %dopar% {
+                                .export   = ls(.GlobalEnv)) %dopar% {
                                   set.seed(parallel_seeds[i])
                                   bb.fn(designs[i,], parent.frame$target.fns)}
     stopCluster(cl)
@@ -33,11 +33,11 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
       foreach::foreach(i = seq_len(nrow(designs)),
                        .packages = c("stats"),
                        .combine  = rbind,
-                       .export   = .GlobalEnv) %:%
+                       .export   = ls(.GlobalEnv)) %:%
       foreach::foreach(j = seq_len(nSampleAvg),
                        .combine='bind_and_sum',
                        .packages = c("stats"),
-                       .export   = .GlobalEnv) %dopar%{
+                       .export   = ls(.GlobalEnv)) %dopar%{
         set.seed(parallel_seeds[(i-1)*nSampleAvg+j])
         bb.fn(designs[i,], parent.frame$target.fns)}
 
