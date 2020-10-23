@@ -12,6 +12,7 @@ RunMBO <- function(d.pars, bb.fn, target.fns = NULL, hyper.pars,
 
   ## Initialize ii: Create Designs
   if(is.null(results.mbo)) {
+    cat("Generating Initial Designs...")
     results.mbo =
       SetupMBO(d.pars, bb.fn, target.fns, hyper.pars)
   }
