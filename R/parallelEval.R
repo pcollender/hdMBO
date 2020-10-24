@@ -26,7 +26,7 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
                                 .combine = rbind,
                                 .export   = ls(.GlobalEnv)) %dopar% {
                                   set.seed(parallel_seeds[i])
-                                  bb.fn(designs[i,], parent.frame$target.fns)}
+                                  bb.fn(designs[i,])}
     stopCluster(cl)
   } else{
     new.objf =
@@ -39,7 +39,7 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
                        .packages = c("stats"),
                        .export   = ls(.GlobalEnv)) %dopar%{
         set.seed(parallel_seeds[(i-1)*nSampleAvg+j])
-        bb.fn(designs[i,], parent.frame$target.fns)}
+        bb.fn(designs[i,])}
 
     snow::stopCluster(cl)
     new.objf = new.objf / nSampleAvg
