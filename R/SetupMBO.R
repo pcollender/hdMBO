@@ -1,6 +1,6 @@
 # Initial design, evaluations, search space
 #' @export
-SetupMBO <- function(d.pars, bb.fn, target.fns, hyper.pars) {
+SetupMBO <- function(d.pars, bb.fn, hyper.pars) {
   ### Purposes:
   ###   i)   Setup search space according to d.pars and hyper.pars
   ###   ii)  Generate initial designs and evaluate

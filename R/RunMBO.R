@@ -10,7 +10,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
   if(is.null(results.mbo)) {
     cat("Generating Initial Designs...")
     results.mbo =
-      SetupMBO(d.pars, bb.fn, target.fns, hyper.pars)
+      SetupMBO(d.pars, bb.fn, hyper.pars)
   }
   d = ncol(results.mbo$outcomes$designs)
   o = ncol(results.mbo$outcomes$obj.evals)
