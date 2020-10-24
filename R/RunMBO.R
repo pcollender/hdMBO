@@ -35,20 +35,23 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
       filepath = paste0(hyper.pars$progress.upd.settings$save.filedir,
                         hyper.pars$progress.upd.settings$filename.tag,
                         "_ITER", warm.start.iter,
-                        ifelse(hyper.pars$save.time, paste0("_", time), ""), ".RData")
+                        ifelse(hyper.pars$progress.upd.settings$save.time,
+                               paste0("_", time), ""), ".RData")
       save(results.mbo, file=filepath)
       ## save a plot of progress?
       if(hyper.pars$progress.upd.settings$doSaveProgPlot) {
         if(o == 1) {
           PlotSOProgress(results.mbo,
                          plot.settings = hyper.pars$progress.upd.settings,
-                         time = ifelse(hyper.pars$save.time, paste0("_", time), ""), isFinal = FALSE)
+                         time = ifelse(hyper.pars$progress.upd.settings$save.time,
+                                       paste0("_", time), ""), isFinal = FALSE)
         } else{## multi objective
           PlotMOProgress(results.mbo,
                          plot.settings = hyper.pars$progress.upd.settings,
                          iters.per.pf  =
                            hyper.pars$progress.upd.settings$iters.per.progress.save,
-                         time = ifelse(hyper.pars$save.time, paste0("_", time), ""), isFinal = FALSE)
+                         time = ifelse(hyper.pars$progress.upd.settings$save.time,
+                                       paste0("_", time), ""), isFinal = FALSE)
         }
       }
       cat("Saved Intermediate Results")
@@ -278,19 +281,22 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     filepath = paste0(hyper.pars$progress.upd.settings$save.filedir,
                       hyper.pars$progress.upd.settings$filename.tag,
                       "_FINAL",
-                      time = ifelse(hyper.pars$save.time, paste0("_", time), ""), ".RData")
+                      time = ifelse(hyper.pars$progress.upd.settings$save.time,
+                                    paste0("_", time), ""), ".RData")
     # save results
     save(results.mbo, file=filepath)
     # save plots of results
     if(o==1) {
       PlotSOProgress(results.mbo,
                      plot.settings = hyper.pars$progress.upd.settings,
-                     time = ifelse(hyper.pars$save.time, paste0("_", time), ""), isFinal = TRUE)
+                     time = ifelse(hyper.pars$progress.upd.settings$save.time,
+                                   paste0("_", time), ""), isFinal = TRUE)
     } else{
       PlotMOProgress(results.mbo,
                      plot.settings = hyper.pars$progress.upd.settings,
                      iters.per.pf = hyper.pars$progress.upd.settings$iters.per.progress.save,
-                     time = ifelse(hyper.pars$save.time, paste0("_", time), ""), isFinal = TRUE)
+                     time = ifelse(hyper.pars$progress.upd.settings$save.time,
+                                   paste0("_", time), ""), isFinal = TRUE)
     }
 
   }
