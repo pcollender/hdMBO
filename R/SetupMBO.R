@@ -6,10 +6,6 @@ SetupMBO <- function(d.pars, bb.fn, target.fns, hyper.pars) {
   ###   ii)  Generate initial designs and evaluate
   ###   iii) Initialize results list
 
-  # Initialize: Recast BB function as only input of design parameters
-  bb.fn.mbo      = function(x) {
-    return(bb.fn(x, parent.frame$target.fns))
-  }
 
   # check if parameter box boundaries are manually initiated
   if(length(setdiff(unique(sapply(d.pars, length)), 2)) != 0) {
@@ -35,7 +31,7 @@ SetupMBO <- function(d.pars, bb.fn, target.fns, hyper.pars) {
     new.objf = parallelEval(bb.fn, designs = init.des,
                             nSampleAvg = hyper.pars$nSampleAvg,
                             nCores = hyper.pars$nCores)
-  } else{new.objf = as.matrix(apply(init.des, 1, bb.fn.mbo),
+  } else{new.objf = as.matrix(apply(init.des, 1, bb.fn),
                                 nrow = ncol(results.mbo$outcomes$obj.evals))}
 
   ## initialize outcomes object

@@ -1,13 +1,9 @@
 # Main BO Architecture
 #' @export
-RunMBO <- function(d.pars, bb.fn, target.fns = NULL, hyper.pars,
+RunMBO <- function(d.pars, bb.fn, hyper.pars,
                    results.mbo = NULL) {
   ### Purpose: Run Full Optimization Framework
 
-  # Initialize i: Recast BB function as only input of design parameters
-  bb.fn.mbo      = function(x) {
-    return(bb.fn(x, parent.frame$target.fns))
-  }
 
 
   ## Initialize ii: Create Designs
@@ -219,7 +215,7 @@ RunMBO <- function(d.pars, bb.fn, target.fns = NULL, hyper.pars,
       new.objf = parallelEval(bb.fn, designs = new.x,
                               nSampleAvg = hyper.pars$nSampleAvg,
                               nCores= hyper.pars$nCores)
-    } else{new.objf = t(as.matrix(apply(new.x, 1, bb.fn.mbo),
+    } else{new.objf = t(as.matrix(apply(new.x, 1, bb.fn),
                                   nrow = ncol(results.mbo$outcomes$obj.evals)))
     }
     results.mbo$outcomes$obj.evals[ind,] = new.objf
@@ -262,7 +258,7 @@ RunMBO <- function(d.pars, bb.fn, target.fns = NULL, hyper.pars,
       paste0("obj", 1:length(results.mbo$gp.models))
     # Post-processing of the MO Bayesian Optimization Loop
     results.mbo$solution =
-      finalEvalParetoFront(bb.fn.mbo        = bb.fn.mbo,
+      finalEvalParetoFront(bb.fn.mbo        = bb.fn,
                            results.mbo      = results.mbo,
                            hyper.pars       = hyper.pars)
   }
