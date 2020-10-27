@@ -14,7 +14,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     ## save initial designs
     filepath = paste0(hyper.pars$progress.upd.settings$save.filedir,
                       hyper.pars$progress.upd.settings$filename.tag,
-                      "_INITDES"
+                      "_INITDES",
                       ifelse(hyper.pars$progress.upd.settings$save.time,
                              paste0("_", time), ""), ".RData"))
   }
