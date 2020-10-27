@@ -42,6 +42,11 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
   ## initialize simulation arrays
   sims.array = array(0, dim = c(n.resample.pf, npointssim, o))
   design.sim = array(0, dim = c(npointssim, d, n.resample.pf))
+  ## start progress bar
+  pb = txtProgressBar(0, n.resample.pf, style = 3)
+  prog = function(i) setTxtProgressBar(pb, i)
+  opts = list(progress = prog)
+
   ## run simulations on random designs from posterior distribution
   if(parallelize == TRUE) {
     ## need to establish seeds for reproducibility
@@ -54,9 +59,6 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
     } else{
       cl <- makeCluster(nCores)
       doSNOW::registerDoSNOW(cl)}
-    pb = txtProgressBar(0, n.resample.pf, style = 3)
-    prog = function(i) setTxtProgressBar(pb, i)
-    opts = list(progress = prog)
     ## run posterior simulation loop
     sim.list =
       foreach::foreach(i = seq_len(n.resample.pf),
@@ -74,7 +76,6 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
                 return(sims.array[i,,])
               }
     ## close backend
-    close(pb)
     snow::stopCluster(cl)
     ## assign the sim list to the simulation array
     for(i in seq_len(length(sim.list))){
@@ -83,15 +84,17 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
   }
   if(parallelize == FALSE){ for(i in seq_len(n.resample.pf)){
     ## sample simulation loop as above
-    pb = txtProgressBar(0, n.resample.pf, style = 3)
     design.sim[,,i] = as.matrix(search.function())
     for(j in seq_len(o)) {
       sims.array[i,,j] =
         simulate(results.mbo$gp.models[[j]],
                  nsim = 1, newdata = design.sim[,,i], cond = TRUE,
                  checkNames = FALSE, nugget.sim = 10^-8) }
-    setTxtProgressBar(pb, i)
   }}
+  ## end progress bar
+  close(pb)
+
+
   ### TODO: extend CPF function to >2 objectives....
   if(o==2) {
     CPF.res =
