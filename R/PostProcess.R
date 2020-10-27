@@ -84,7 +84,7 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
   }
   if(parallelize == FALSE){ for(i in seq_len(n.resample.pf)){
     ## print progress bar update
-    prog
+    prog(i)
     ## sample simulation loop as above
     design.sim[,,i] = as.matrix(search.function())
     for(j in seq_len(o)) {
