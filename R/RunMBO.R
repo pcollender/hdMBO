@@ -11,7 +11,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     cat("Generating Initial Designs...")
     results.mbo =
       SetupMBO(d.pars, bb.fn, hyper.pars)
-    ## save initial designs
+    ## save the initial designs
     filepath = paste0(hyper.pars$progress.upd.settings$save.filedir,
                       hyper.pars$progress.upd.settings$filename.tag,
                       "_INITDES",
