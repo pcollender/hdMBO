@@ -16,7 +16,9 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
                       hyper.pars$progress.upd.settings$filename.tag,
                       "_INITDES",
                       ifelse(hyper.pars$progress.upd.settings$save.time,
-                             paste0("_", time), ""), ".RData"))
+                             paste0("_", time), ""), ".RData")
+    save(results.mbo, file=filepath)
+
   }
   d = ncol(results.mbo$outcomes$designs)
   o = ncol(results.mbo$outcomes$obj.evals)
