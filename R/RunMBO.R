@@ -4,9 +4,19 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
                    results.mbo = NULL) {
   ### Purpose: Run Full Optimization Framework
 
+  ## Initialize parallelization, if needed
+  if(hyper.pars$parallelize == TRUE) {
+    cat("Spinning up parallelization cores...")
+    if(is.null(nCores)){
+      cl <- snow::makeCluster(detectCores() - 1)
+      doSNOW::registerDoSNOW(cl)
+    } else{
+      cl <- snow::makeCluster(nCores)
+      doSNOW::registerDoSNOW(cl)
+    }
+  }
 
-
-  ## Initialize ii: Create Designs
+  ## Create Initial Designs
   if(is.null(results.mbo)) {
     cat("Generating Initial Designs...")
     results.mbo =
@@ -254,9 +264,10 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     # Find best predicted design.  Evaluate finalEvals times.
     results.mbo$solution =
       finalEvalBestPred(bb.fn, results.mbo,
-                        num.evals  = hyper.pars$finalEvals,
-                        nCores     = hyper.pars$nCores,
-                        jitter     = hyper.pars$jitter)
+                        num.evals   = hyper.pars$finalEvals,
+                        parallelize = hyper.pars$parallelize,
+                        nCores      = hyper.pars$nCores,
+                        jitter      = hyper.pars$jitter)
   } else{## MULTIOBJECTIVE
     cat("Finalizing multi-obj sol")
     # Run GP model on final set of evaluated points.
@@ -307,6 +318,12 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
                                    paste0("_", time), ""), isFinal = TRUE)
     }
 
+  }
+
+  ## end parallelization, if needed
+  if(hyper.pars$parallelize == TRUE) {
+    cat("Spinning down parallelization cores...")
+    snow::stopCluster(cl)
   }
 
   return(results.mbo)

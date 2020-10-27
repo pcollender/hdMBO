@@ -11,14 +11,6 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
   ## need to establish seeds for reproducibility
   parallel_seeds <- sample(maxSeed, size = nrow(designs)*nSampleAvg)
 
-  # initialize backend
-  if(is.null(nCores)){
-    cl <- snow::makeCluster(detectCores() - 1)
-    doSNOW::registerDoSNOW(cl)
-  } else{
-    cl <- snow::makeCluster(nCores)
-    doSNOW::registerDoSNOW(cl)
-  }
 
   if(nSampleAvg == 1) {
     new.objf = foreach::foreach(i = seq_len(nrow(designs)),
@@ -41,7 +33,6 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
         set.seed(parallel_seeds[(i-1)*nSampleAvg+j])
         bb.fn(designs[i,])}
 
-    snow::stopCluster(cl)
     new.objf = new.objf / nSampleAvg
   }
 

@@ -1,7 +1,8 @@
 # Single Objective Best Predicted
 #' @export
 finalEvalBestPred <-
-  function(bb.fn, results.mbo, num.evals, nCores,
+  function(bb.fn, results.mbo, num.evals,
+           parallelize, nCores,
            jitter, is.noisy = TRUE) {
     # get predictions at evaluated points
     preds=DiceKriging::predict.km(results.mbo$gp.models$obj1,
@@ -11,9 +12,13 @@ finalEvalBestPred <-
     ind = which.min(preds)
     des = results.mbo$outcomes$designs[ind,]
 
-    ### TODO: parallelization
-    eval = parallelEval(bb.fn, designs = des, nSampleAvg=num.evals,
-                        nCores)
+    if(parallelize == TRUE) {
+      eval = parallelEval(bb.fn, designs = des, nSampleAvg=num.evals,
+                          nCores)
+    } else{
+      eval = mean(sapply(seq_len(nSampleAvg),
+                         function(i) bb.fn(des)))
+    }
 
     return(list(index     = results.mbo$outcomes$index[ind],
                 iteration = results.mbo$outcomes$iteration[ind],
@@ -52,13 +57,6 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
     ## need to establish seeds for reproducibility
     parallel_seeds <- sample(maxSeed, size = n.resample.pf)
 
-    # initialize backend
-    if(is.null(nCores)){
-      cl <- snow::makeCluster(detectCores() - 1)
-      doSNOW::registerDoSNOW(cl)
-    } else{
-      cl <- makeCluster(nCores)
-      doSNOW::registerDoSNOW(cl)}
     ## run posterior simulation loop
     sim.list =
       foreach::foreach(i = seq_len(n.resample.pf),
@@ -75,8 +73,7 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
                            }
                 return(sims.array[i,,])
               }
-    ## close backend
-    snow::stopCluster(cl)
+
     ## assign the sim list to the simulation array
     for(i in seq_len(length(sim.list))){
       sims.array[i,,]=sim.list[[i]]

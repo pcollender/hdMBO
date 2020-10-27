@@ -504,6 +504,8 @@ mbo.hyperparams$progress.upd.settings$save.filedir = "demo_results/"
 mbo.hyperparams$progress.upd.settings$filename.tag = "low_dim_bi_obj"
 mbo.hyperparams$progress.upd.settings$save.time    = FALSE
 
+
+
 mbo.hyperparams$iterations = 6
 
 ### Custom boundaries:
