@@ -83,6 +83,7 @@ ComputeCondPF <- function(bb.fn.mbo, results.mbo,
   }
   if(parallelize == FALSE){ for(i in seq_len(n.resample.pf)){
     ## sample simulation loop as above
+    pb = txtProgressBar(0, n.resample.pf, style = 3)
     design.sim[,,i] = as.matrix(search.function())
     for(j in seq_len(o)) {
       sims.array[i,,j] =
