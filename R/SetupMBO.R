@@ -29,8 +29,7 @@ SetupMBO <- function(d.pars, bb.fn, hyper.pars) {
 
   if(hyper.pars$parallelize == TRUE){
     new.objf = parallelEval(bb.fn, designs = init.des,
-                            nSampleAvg = hyper.pars$nSampleAvg,
-                            nCores = hyper.pars$nCores)
+                            nSampleAvg = hyper.pars$nSampleAvg)
   } else{new.objf = do.call(rbind,
                             lapply(1:nrow(init.des),
                                    function(i) bb.fn(init.des[i,])))}
