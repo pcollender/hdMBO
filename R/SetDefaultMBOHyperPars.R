@@ -17,7 +17,7 @@ SetDefaultMBOHyperPars <- function() {
                        pf.plot.dims       = list(width = 10, height = 10))
 
     ),
-    no.export = "", #any objects from your environment (ex. Rcpp functions) to not send to the cores
+    no.export = "", #any objs from your environment (ex. Rcpp functions) to not send to the cores
     
     ### Hyperparameters determining # of obj function evaluations
     initDesignsPerParam = 4L,
