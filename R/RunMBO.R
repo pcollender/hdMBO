@@ -7,7 +7,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
   ## Initialize parallelization, if needed
   if(hyper.pars$parallelize == TRUE) {
     cat("Spinning up parallelization cores...")
-    if(is.null(nCores)){
+    if(is.null(hyper.pars$nCores)){
       cl <- snow::makeCluster(detectCores() - 1)
       doSNOW::registerDoSNOW(cl)
     } else{
