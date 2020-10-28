@@ -18,6 +18,7 @@ SetDefaultMBOHyperPars <- function() {
 
     ),
     no.export = "", #any objects from your environment (ex. Rcpp functions) to not send to the cores
+    
     ### Hyperparameters determining # of obj function evaluations
     initDesignsPerParam = 4L,
     iterations          = 8L,
