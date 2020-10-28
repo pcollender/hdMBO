@@ -1,5 +1,5 @@
 #' @export
-parallelEval <- function(bb.fn, designs, nSampleAvg, nCores,
+parallelEval <- function(bb.fn, designs, nSampleAvg,
                          maxSeed = 1e9) {
   # This function simultaneously handles:
   #   i)  multipoint proposals

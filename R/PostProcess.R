@@ -2,7 +2,7 @@
 #' @export
 finalEvalBestPred <-
   function(bb.fn, results.mbo, num.evals,
-           parallelize, nCores,
+           parallelize,
            jitter, is.noisy = TRUE) {
     # get predictions at evaluated points
     preds=DiceKriging::predict.km(results.mbo$gp.models$obj1,
@@ -13,8 +13,7 @@ finalEvalBestPred <-
     des = results.mbo$outcomes$designs[ind,]
 
     if(parallelize == TRUE) {
-      eval = parallelEval(bb.fn, designs = des, nSampleAvg=num.evals,
-                          nCores)
+      eval = parallelEval(bb.fn, designs = des, nSampleAvg=num.evals)
     } else{
       eval = mean(sapply(seq_len(nSampleAvg),
                          function(i) bb.fn(des)))
@@ -34,7 +33,7 @@ finalEvalBestPred <-
 #' @export
 ComputeCondPF <- function(bb.fn.mbo, results.mbo,
                           n.resample.pf, final.pf.random.searches.per.d,
-                          parallelize, nCores,
+                          parallelize,
                           search.function, maxSeed = 1e9) {
   ## of points per simulation
   d = ncol(results.mbo$outcomes$designs)
@@ -135,7 +134,6 @@ finalEvalParetoFront <-
       final.pf.method                = hyper.pars$final.pf.method
       final.pf.random.searches.per.d = hyper.pars$final.pf.random.searches.per.d
       parallelize                    = hyper.pars$parallelize
-      nCores                         = hyper.pars$nCores
       nsga2.hyper.pars               = hyper.pars$nsga2.hyper.pars
 
       if(final.pf.method == "post.fct.approx") {
@@ -188,7 +186,7 @@ finalEvalParetoFront <-
         solution$post.sim =
           ComputeCondPF(bb.fn.mbo, results.mbo,
                         n.resample.pf, final.pf.random.searches.per.d,
-                        parallelize = parallelize, nCores = nCores,
+                        parallelize = parallelize,
                         search.function = random_search_data)
 
       }

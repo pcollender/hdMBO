@@ -11,7 +11,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
       cl <- snow::makeCluster(detectCores() - 1)
       doSNOW::registerDoSNOW(cl)
     } else{
-      cl <- snow::makeCluster(nCores)
+      cl <- snow::makeCluster(hyper.pars$nCores)
       doSNOW::registerDoSNOW(cl)
     }
   }
@@ -234,8 +234,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     new.x = as.matrix(results.mbo$outcomes$designs[ind])
     if(hyper.pars$parallelize == TRUE){
       new.objf = parallelEval(bb.fn, designs = new.x,
-                              nSampleAvg = hyper.pars$nSampleAvg,
-                              nCores= hyper.pars$nCores)
+                              nSampleAvg = hyper.pars$nSampleAvg)
     } else{new.objf = t(as.matrix(apply(new.x, 1, bb.fn),
                                   nrow = ncol(results.mbo$outcomes$obj.evals)))
     }
@@ -266,7 +265,6 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
       finalEvalBestPred(bb.fn, results.mbo,
                         num.evals   = hyper.pars$finalEvals,
                         parallelize = hyper.pars$parallelize,
-                        nCores      = hyper.pars$nCores,
                         jitter      = hyper.pars$jitter)
   } else{## MULTIOBJECTIVE
     cat("Finalizing multi-obj sol")
