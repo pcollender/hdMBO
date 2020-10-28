@@ -2,7 +2,7 @@
 #' @export
 finalEvalBestPred <-
   function(bb.fn, results.mbo, num.evals,
-           parallelize,
+           parallelize, no.export,
            jitter, is.noisy = TRUE) {
     # get predictions at evaluated points
     preds=DiceKriging::predict.km(results.mbo$gp.models$obj1,

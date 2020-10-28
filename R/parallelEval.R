@@ -1,5 +1,5 @@
 #' @export
-parallelEval <- function(bb.fn, designs, nSampleAvg,
+parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
                          maxSeed = 1e9) {
   # This function simultaneously handles:
   #   i)  multipoint proposals
@@ -15,8 +15,10 @@ parallelEval <- function(bb.fn, designs, nSampleAvg,
   if(nSampleAvg == 1) {
     new.objf = foreach::foreach(i = seq_len(nrow(designs)),
                                 .packages = .packages(),
-                                .combine = rbind,
-                                .export   = ls(.GlobalEnv)) %dopar% {
+                                .combine  = rbind,
+                                .export   = setdiff(ls(.GlobalEnv),
+                                                    no.export),
+                                .noexport = no.export) %dopar% {
                                   set.seed(parallel_seeds[i])
                                   bb.fn(designs[i,])}
     stopCluster(cl)
@@ -25,11 +27,15 @@ parallelEval <- function(bb.fn, designs, nSampleAvg,
       foreach::foreach(i = seq_len(nrow(designs)),
                        .packages = .packages(),
                        .combine  = rbind,
-                       .export   = ls(.GlobalEnv)) %:%
+                       .export   = setdiff(ls(.GlobalEnv),
+                                           no.export),
+                       .noexport = no.export) %:%
       foreach::foreach(j = seq_len(nSampleAvg),
                        .combine='bind_and_sum',
-                       .packages = c("stats"),
-                       .export   = ls(.GlobalEnv)) %dopar%{
+                       .packages = c("stats", "Rcpp"),
+                       .export   = setdiff(ls(.GlobalEnv),
+                                           no.export),
+                       .noexport = no.export) %dopar%{
         set.seed(parallel_seeds[(i-1)*nSampleAvg+j])
         bb.fn(designs[i,])}
 

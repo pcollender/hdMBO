@@ -234,7 +234,8 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     new.x = as.matrix(results.mbo$outcomes$designs[ind])
     if(hyper.pars$parallelize == TRUE){
       new.objf = parallelEval(bb.fn, designs = new.x,
-                              nSampleAvg = hyper.pars$nSampleAvg)
+                              nSampleAvg = hyper.pars$nSampleAvg,
+                              no.export  = hyper.pars$no.export)
     } else{new.objf = t(as.matrix(apply(new.x, 1, bb.fn),
                                   nrow = ncol(results.mbo$outcomes$obj.evals)))
     }
