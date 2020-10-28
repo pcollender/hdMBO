@@ -15,8 +15,7 @@ GenBoxDesign <- function(params, n) {
 
   des.box = data.table::data.table()
   for(i in 1:length(params)) {
-    des.box[,
-            names(params)[i]:=des.qnt[,i]*range[i]+lb[i]]
+    des.box[, names(params)[i]:=des.qnt[,i]*range[i]+lb[i]]
   }
 
   return(des.box)
