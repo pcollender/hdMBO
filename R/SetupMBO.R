@@ -27,6 +27,7 @@ SetupMBO <- function(d.pars, bb.fn, hyper.pars) {
 
   ## Generate Initial Objective Evaluations
 
+  ## parallelization choice
   if(hyper.pars$parallelize == TRUE){
     new.objf = parallelEval(bb.fn, designs = init.des,
                             nSampleAvg = hyper.pars$nSampleAvg)
