@@ -15,7 +15,7 @@ finalEvalBestPred <-
     if(parallelize == TRUE) {
       eval = parallelEval(bb.fn, designs = des, nSampleAvg=num.evals)
     } else{
-      eval = mean(sapply(seq_len(nSampleAvg),
+      eval = mean(sapply(seq_len(num.evals),
                          function(i) bb.fn(des)))
     }
 
