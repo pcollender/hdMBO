@@ -8,7 +8,7 @@ SetDefaultMBOHyperPars <- function() {
       iters.per.progress.save    = 3L, ## how many iterations to run before saving progress?
       doSaveProgPlot             = TRUE, ## save a plot of optimization path or PF?
       filename.tag               = "my_opt_run", ## name of intmdt. save file (system time auto-added to the end)
-      save.filedir               = "output/opt_results/", ## directory for intmdt. saves
+      save.filedir               = "", ## directory for intmdt. saves
       save.time                  = TRUE, ## save the time?
       doSaveFinal                = TRUE, ## saves the completed run, deletes intermediate results
       max.cuts                   = 4L, ## how many pareto front layers to display on plots?
