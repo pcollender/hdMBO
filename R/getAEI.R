@@ -20,7 +20,7 @@ getAEI = function(point, model, designs, ebs, se.threshold = 1e-6) {
                                 matrix(point,nrow=1,
                                        dimnames = list(
                                          NULL, names(designs))),
-                              type = "SK")
+                              type = "SK", checkNames = F)
   p.mu = p$mean
   p.se = p$sd
 
@@ -54,7 +54,7 @@ getEBS = function(designs, model,
   preds = DiceKriging::predict.km(model, newdata = designs +
                                     ifelse(is.noisy,
                                            sample(c(-1,1),1)*jitter, 0),
-                                  type = "SK")
+                                  type = "SK",checkNames = F)
   mu = preds$mean
   se = preds$sd
 
