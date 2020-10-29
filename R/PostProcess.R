@@ -8,7 +8,8 @@ finalEvalBestPred <-
     preds=DiceKriging::predict.km(results.mbo$gp.models$obj1,
                                   newdata = results.mbo$outcomes$designs +
                                     ifelse(is.noisy, sample(c(-1,1),1)*jitter, 0),
-                                  type = "SK")$mean
+                                  type = "SK",
+                                  checkNames = F)$mean
     ind = which.min(preds)
     des = results.mbo$outcomes$designs[ind,]
 
