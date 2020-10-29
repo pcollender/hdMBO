@@ -141,7 +141,8 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
             DiceKriging::predict.km(
               results.mbo$gp.models$obj1,
               newdata = results.mbo$outcomes$designs[ind,..opt.cols],
-              type = "SK")$mean
+              type = "SK",
+              checkNames = F)$mean
           )
       }
     } else{# MULTI OBJECTIVE INFILL CRITERION OPTIMIZATION:
@@ -211,7 +212,8 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
                        function(x)
                          DiceKriging::predict.km(
                            x, newdata = results.mbo$outcomes$designs[ind,..opt.cols],
-                           type = "SK")$mean)
+                           type = "SK",
+                           checkNames = F)$mean)
         colnames(preds)=NULL
 
 
