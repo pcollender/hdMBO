@@ -47,7 +47,8 @@ MaxInfillNoisyMultiObj <- function(model_list, designs, search.space,
                                                      dimnames =
                                                        list(NULL,
                                                             names(designs))),
-                                            type = "SK")
+                                            type = "SK",
+                                            checkNames = F)
                             return(pred$mean -
                                      ifelse(!is.null(alpha), alpha,
                                             -qnorm(0.5 * (0.5^(1/o))))
