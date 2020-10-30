@@ -10,9 +10,14 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
 
   ## need to establish seeds for reproducibility
   parallel_seeds <- sample(maxSeed, size = nrow(designs)*nSampleAvg)
-
-
-  if(nSampleAvg == 1) {
+  
+  #adding in mclapply option for Linux machines, since this can be faster (and plays much nicer with data.table)
+  OS = Sys.info()['sysname']
+  
+  
+  if(OS != 'Linux'){
+    if(nSampleAvg == 1) {
+    
     new.objf = foreach::foreach(i = seq_len(nrow(designs)),
                                 .packages = .packages(),
                                 .combine  = rbind,
@@ -21,9 +26,9 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
                                 .noexport = no.export) %dopar% {
                                   set.seed(parallel_seeds[i])
                                   bb.fn(designs[i,])}
-    stopCluster(cl)
-  } else{
-    new.objf =
+    
+    }else{
+      new.objf =
       foreach::foreach(i = seq_len(nrow(designs)),
                        .packages = .packages(),
                        .combine  = rbind,
@@ -40,8 +45,15 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
         bb.fn(designs[i,])}
 
     new.objf = new.objf / nSampleAvg
-  }
-
+      }}else{
+    
+      indices = rep(seq_len(nrow(designs)), nSampleAvg)
+      new.objf = do.call(rbind,mclapply(X = indices,
+                          FUN = function(i){set.seed(parallel_seeds[i]); bb.fn(designs[i,])},
+                          mc.cores = getOption('mc.cores')))
+      
+      }
+                          
   row.names(new.objf) = NULL
   return(new.objf)
 }
