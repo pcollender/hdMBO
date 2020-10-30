@@ -16,6 +16,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
         cl <- snow::makeCluster(hyper.pars$nCores)
         doSNOW::registerDoSNOW(cl)
       }
+    }
       
   ## Create Initial Designs
   if(is.null(results.mbo)) {
@@ -323,7 +324,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
   }
 
   ## end parallelization, if needed
-  if(hyper.pars$parallelize == TRUE) {
+  if(hyper.pars$parallelize == TRUE & OS != 'Linux') {
     cat("Spinning down parallelization cores...")
     snow::stopCluster(cl)
   }
