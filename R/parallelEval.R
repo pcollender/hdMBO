@@ -47,11 +47,13 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
     new.objf = new.objf / nSampleAvg
       }}else{
     
-      indices = rep(seq_len(nrow(designs)), nSampleAvg)
-      new.objf = do.call(rbind,mclapply(X = indices,
-                          FUN = function(i){set.seed(parallel_seeds[i]); bb.fn(designs[i,])},
-                          mc.cores = getOption('mc.cores')))
+      des.indices = rep(seq_len(nrow(designs)), nSampleAvg)
       
+      new.objf = do.call(rbind,mclapply(X = seq_len(length(des.indices)),
+                          FUN = function(i){set.seed(parallel_seeds[i]); bb.fn(designs[des.indices[i],])},
+                          mc.cores = getOption('mc.cores')))
+    
+      new.objf = apply(new.objf, 2, tapply, des.indices, mean)
       }
                           
   row.names(new.objf) = NULL
