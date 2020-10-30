@@ -3,19 +3,20 @@
 RunMBO <- function(d.pars, bb.fn, hyper.pars,
                    results.mbo = NULL) {
   ### Purpose: Run Full Optimization Framework
-
+  OS = Sys.info()['sysname']
   ## Initialize parallelization, if needed
   if(hyper.pars$parallelize == TRUE) {
     cat("Spinning up parallelization cores...")
-    if(is.null(hyper.pars$nCores)){
-      cl <- snow::makeCluster(detectCores() - 1)
-      doSNOW::registerDoSNOW(cl)
-    } else{
-      cl <- snow::makeCluster(hyper.pars$nCores)
-      doSNOW::registerDoSNOW(cl)
-    }
-  }
-
+    if(is.null(hyper.pars$nCores))
+      hyper.pars$nCores = detectCores() - 1
+    
+    if(OS == 'Linux'){
+          options('mc.cores' = hyper.pars$nCores)
+       }else{
+        cl <- snow::makeCluster(hyper.pars$nCores)
+        doSNOW::registerDoSNOW(cl)
+      }
+      
   ## Create Initial Designs
   if(is.null(results.mbo)) {
     cat("Generating Initial Designs...")
