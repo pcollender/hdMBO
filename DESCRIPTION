@@ -30,7 +30,8 @@ Depends:
     foreach,
     iterators,
     snow,
-    doSNOW
+    doSNOW,
+    RhpcBLASctl
 Suggests:
     knitr,
     rmarkdown
