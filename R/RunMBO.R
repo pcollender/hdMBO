@@ -12,6 +12,8 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     
     if(OS == 'Linux'){
           options('mc.cores' = hyper.pars$nCores)
+          og_blas_thread = RhpcBLASctl::blas_get_num_procs()
+          RhpBLASctl::blas_set_num_threads(1)
        }else{
         cl <- snow::makeCluster(hyper.pars$nCores)
         doSNOW::registerDoSNOW(cl)
@@ -324,11 +326,13 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
   }
 
   ## end parallelization, if needed
-  if(hyper.pars$parallelize == TRUE & OS != 'Linux') {
-    cat("Spinning down parallelization cores...")
-    snow::stopCluster(cl)
-  }
-
+  if(hyper.pars$parallelize == TRUE)
+    if(OS != 'Linux') {
+      cat("Spinning down parallelization cores...")
+      snow::stopCluster(cl)
+    }else{
+      RhpBLASctl::blas_set_num_threads(og_blas_thread)    
+    }
   return(results.mbo)
 }
 
