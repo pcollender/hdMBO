@@ -51,7 +51,7 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
       
       new.objf = do.call(rbind,mclapply(X = seq_len(length(des.indices)),
                           FUN = function(i){set.seed(parallel_seeds[i]) 
-                                            pb = txtProgressBar(0, nrow(des.indices),style = 3)
+                                            pb = txtProgressBar(0, length(des.indices),style = 3)
                                             setTxtProgressBar(pb, i)
                                             bb.fn(designs[des.indices[i],])},
                           mc.cores = getOption('mc.cores')))
