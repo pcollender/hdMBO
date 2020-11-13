@@ -218,6 +218,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
                            x, newdata = results.mbo$outcomes$designs[ind,..opt.cols],
                            type = "SK",
                            checkNames = F)$mean)
+        if(class(preds) != 'matrix') preds = matrix(preds, nrow = hyper.pars$pointsPerIter)
         colnames(preds)=NULL
 
 
