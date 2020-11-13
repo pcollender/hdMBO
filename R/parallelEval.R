@@ -52,8 +52,9 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
       new.objf = mclapply(X = seq_len(length(des.indices)),
                           FUN = function(i){set.seed(parallel_seeds[i]) 
                                             pb = txtProgressBar(0, length(des.indices),style = 3)
+                                            res = bb.fn(designs[des.indices[i],])
                                             setTxtProgressBar(pb, i)
-                                            bb.fn(designs[des.indices[i],])},
+                                            return(res)},
                           mc.cores = getOption('mc.cores'))
       nulls = sapply(new.objf,is.null)
       while(any(nulls)){
@@ -61,8 +62,9 @@ parallelEval <- function(bb.fn, designs, nSampleAvg, no.export,
         new.objf[redoinds] = mclapply(X = redoinds,
                           FUN = function(i){set.seed(parallel_seeds[i]) 
                                             pb = txtProgressBar(0, length(des.indices),style = 3)
+                                            res = bb.fn(designs[des.indices[i],])
                                             setTxtProgressBar(pb, i)
-                                            bb.fn(designs[des.indices[i],])},
+                                            return(res)},
                           mc.cores = getOption('mc.cores'))
     
         nulls = sapply(new.objf,is.null)
