@@ -21,6 +21,7 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
     }
       
   ## Create Initial Designs
+  warm.start = !is.null(results.mbo)
   if(is.null(results.mbo)) {
     cat("Generating Initial Designs...")
     results.mbo =
@@ -37,7 +38,8 @@ RunMBO <- function(d.pars, bb.fn, hyper.pars,
   d = ncol(results.mbo$outcomes$designs)
   o = ncol(results.mbo$outcomes$obj.evals)
   ## Run BO Loop
-  iter=1
+  iter=ifelse(warm.start, max(results.mbo$outcomes$iteration) + 1, 1)
+  
   while(iter <= hyper.pars$iterations) {
     warm.start.iter = max(results.mbo$outcomes$iteration) + 1
 
